@@ -1,0 +1,289 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.text-bg {
+    background-color: black;
+    padding: 20px 30px;
+    display: inline-block;
+}
+
+/* navbar */
+.navbar {
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    align-items: center;
+    position: relative;
+}
+
+.navbar::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+}
+
+.navbar ul li {
+    font-size: 1.4rem;
+    margin: 0 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    padding: 15px 25px;
+    display: inline-block;
+}
+
+.navbar ul li a:hover {
+    border-bottom: 3px solid #5D76A9;
+}
+
+/* Home section */
+#Home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 700px;
+    padding: 0 15px;
+    background-size: cover;
+}
+
+.left-content {
+    text-align: left;
+    color: white;
+    width: 700px; /* Set the width for the left half */
+    padding: 2px;
+}
+
+.left-content h1 {
+    font-size: 4.3rem;
+    margin-bottom: 10px;
+}
+
+.right-content {
+    width: calc(100% - 700px); /* Adjust the width for the right half */
+    height: 650px; /* Set the height for the right half */
+    position: relative; /* Add relative positioning for the overlay */
+    overflow: hidden;
+    margin-left: 90px;
+}
+
+.right-content .image-container {
+    background-color: black;
+    padding: 8px;
+    display: inline-block;
+}
+
+.right-content img {
+    max-width: 100%; /* Allow the image to take up the container width */
+    max-height: 650px; /* Set the image height to 700px */
+    object-fit: contain; /* Maintain the aspect ratio */
+    margin-left: 40px;
+}
+
+/* Social links */
+.social-links {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr); /* Four rows of equal height */
+    gap: 18px; /* Gap between rows */
+    position: absolute;
+    top: 50%; /* Adjust vertically */
+    right: 20px; /* Adjust horizontally */
+    transform: translateY(-50%);
+}
+
+.social-links a i {
+    color: white;
+    background-color: black;
+    padding: 20px 30px;
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+.social-links a i:hover {
+    transform: scale(1.3);
+}
+
+/* About section */
+#About {
+    margin-top: 80px; /* Adjust the value as needed */
+}
+
+.about-container {
+    
+    padding: 0px 20;
+    height: auto; /* Adjust the height */
+}
+
+.about-content {
+    text-align: center;
+    color: white;
+    padding: 0 20%;
+}
+
+.about-content p {
+    font-size: 1.2rem;
+    background-color: black;
+    padding: 20px 40px;
+    display: inline-block;
+}
+
+.experience-education {
+    display: flex;
+    justify-content: space-between; /* Space the two sections evenly */
+    margin-top: 30px;
+}
+
+.experiences, .education {
+    flex: 1; /* Equal width for both sections */
+    padding: 20px; /* Adjust padding as needed */
+}
+
+.experiences h3, .education h3, .about-content h2 ,.contact-content h2 ,.portfolio-container h2 {
+    font-size: 2.0rem;
+    color: #5D76A9; /* Set text color to #5D76A9 */
+    margin-bottom: 15px;
+    background-color: black;
+    padding: 20px 40px;
+    display: inline-block;
+}
+
+.particle-container {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; /* Adjust width as needed */
+    height: 100%; /* Adjust height as needed */
+    z-index: -1; /* Place the particle container behind the content */
+    pointer-events: none; /* Allow interactions with content above the particles */
+}
+
+/* Contact section */
+.contact-container {
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.contact-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.contact-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #5D76A9;
+    border-radius: 5px;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.send-button {
+    background-color: #5D76A9;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.send-button:hover {
+    color: black;
+
+}
+
+/* Styles for the portfolio section */
+.portfolio-container {
+    color: #5D76A9;
+    padding: 60px 0;
+    text-align: center;
+}
+
+/* CSS for gallery container */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+/* Style each individual image in the gallery */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative; /* Create a positioning context for pseudo-element */
+}
+
+/* Add a reflection using a pseudo-element (::before) */
+.gallery-item img::before {
+    content: "";
+    position: absolute;
+    top: 100%; /* Position it at the bottom of the image */
+    left: 0;
+    width: 100%;
+    height: 20%; /* Adjust the height of the reflection as needed */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    transform: scaleY(-1); /* Flip the gradient vertically */
+}
+
+/* Style for image hover effect */
+.gallery-item:hover img {
+    transform: scale(1.0);
+    border-color: #FFD700; /* Yellow border on hover */
+    border-width: 5px; 
+    border-style: solid; 
+    
+}

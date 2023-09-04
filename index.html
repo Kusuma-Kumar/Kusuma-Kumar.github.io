@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>Kusuma Kumar Portfolio</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js"></script>
+        <script type="module">
+            import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+    
+            // Set up the scene for the particle animation
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+    
+            // Create the particles
+            const particleGeometry = new THREE.BufferGeometry();
+            const colors = [0xfff2cc, 0xfce4ec, 0xff6b6b, 0xd1c4e9];
+            const particleMaterial = new THREE.PointsMaterial({
+                vertexColors: true,
+                size: 0.025,
+                blending: THREE.AdditiveBlending,
+                transparent: true
+            });
+    
+            const particleCount = 1000;
+            const positions = new Float32Array(particleCount * 3);
+            const colorsArray = new Float32Array(particleCount * 3);
+    
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    
+                const color = new THREE.Color(colors[Math.floor(Math.random() * colors.length)]);
+                color.toArray(colorsArray, i * 3);
+            }
+    
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+    
+            const particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+    
+            const particleContainer = document.querySelector('.particle-container');
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            particleContainer.appendChild(renderer.domElement);
+    
+            // Animate the particles
+            const animateParticles = () => {
+                requestAnimationFrame(animateParticles);
+    
+                particles.rotation.x += 0.001;
+                particles.rotation.y += 0.001;
+    
+                renderer.render(scene, camera);
+            };
+    
+            animateParticles();
+    
+            // Create a portfolio gallery
+            const galleryContainer = document.querySelector('.gallery-container');
+            const imageUrls = [
+                'Photos/pic1.JPG',
+                'Photos/pic2.JPG',
+                'Photos/pic3.JPG',
+                'Photos/pic4.JPG',
+                'Photos/pic5.JPG',
+                'Photos/pic6.JPG',
+                'Photos/pic7.JPG',
+                'Photos/pic8.JPG',
+                'Photos/pic9.JPG'
+            ];
+    
+            const imageTextures = [];
+            const textureLoader = new THREE.TextureLoader();
+    
+            for (const imageUrl of imageUrls) {
+                textureLoader.load(imageUrl, (texture) => {
+                    imageTextures.push(texture);
+    
+                    const planeGeometry = new THREE.PlaneGeometry(2, 1.5);
+                    const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
+                    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    
+                    plane.position.set(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
+                    plane.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+    
+                    galleryContainer.add(plane);
+    
+                    if (imageTextures.length === imageUrls.length) {
+                        animateGallery();
+                    }
+                });
+            }
+    
+            // Animate the gallery
+            function animateGallery() {
+                requestAnimationFrame(animateGallery);
+    
+                for (const plane of galleryContainer.children) {
+                    plane.rotation.x += 0.005;
+                    plane.rotation.y += 0.005;
+                }
+    
+                renderer.render(scene, camera);
+            }
+    
+            animateGallery();
+        </script>
+    </head>    
+    <body>
+        <div class="particle-container"></div>
+        <div class="navbar ">
+            <ul>
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#About">About</a></li>
+                <li><a href="#Portfolio">Portfolio</a></li>
+                <li><a href="#Contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div id="Home" class="home-container">
+            <div class="left-content">
+                <h1 class="heading-large text-bg">KUSUMA KUMAR</h1>
+            </div>
+
+            <div class="right-content">
+                <div class="image-container">
+                    <img src="bg.jpg" alt="Background Image">
+                </div>
+                <div class="social-links">
+                    <a href="mailto:kusumak@middlebury.edu"><i
+                            class="fas fa-envelope fa-3x"></i></a>
+                    <a href="https://github.com/Kusuma-Kumar" target="_blank"><i
+                            class="fab fa-github fa-3x"></i></a>
+                    <a href="https://www.linkedin.com/in/kusuma-kumar/"
+                        target="_blank"><i class="fab fa-linkedin fa-3x"></i></a>
+                    <a href="https://www.instagram.com/kusuma_clicks/"
+                        target="_blank"><i class="fab fa-instagram fa-3x"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="About" class="about-container">
+            <div class="about-content">
+
+                <h2>About Me</h2>
+                <p>Hello! I'm Kusuma Kumar, a passionate and creative individual
+                    with a love for technology and design. I thrive on turning
+                    complex problems into elegant solutions. With a background
+                    in Computer Science and a curiosity for learning, I've
+                    delved into various programming languages and technologies.
+                    From front-end web development with HTML, CSS, and
+                    JavaScript to back-end scripting with Python, I'm always
+                    excited to explore new possibilities. My journey has led me
+                    to collaborate with friends to create and inclusive campus
+                    for all those who love tech. I enjoy tackling challenges and
+                    working in collaborative teams to bring ideas to life. When
+                    I'm not coding, you can find me capturing moments with my
+                    camera, exploring the outdoors, or connecting with fellow
+                    tech enthusiasts on my social platforms. Feel free to reach
+                    out—I'm always up for a chat about hiking, photography,
+                    soccer, or the latest innovations!</p>
+
+                <div class="experience-education">
+                    <div class="experiences">
+                        <h3>Experiences</h3>
+                        <p>
+                            May 2023 - Aug 2022<br>
+                            Cyber Security Intern at Watts Water Technologies
+                            <br><br>
+                            May 2022 - Sep 2022<br>
+                            Software Engineering Privilege Access Management
+                            Intern at Imprivata
+                            <br><br>
+                            Jan 2022 - Jan 2023<br>
+                            Student Organization Coordinator at Middlebury
+                            College
+                        </p>
+                    </div>
+
+                    <div class="education">
+                        <h3>Education</h3>
+                        <p>
+                            Sep 2021 - June 2025<br>
+                            Middlebury College<br>
+                            BA, Major in Computer Science
+                            <br><br>
+                            Jun 2006 - Aug 2020<br>
+                            Shanti Bhavan Residential School<br>
+                            High School Diploma
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Portfolio" class="portfolio-container">
+            <h2 class="section-heading">Portfolio</h2>
+            <div class="gallery-container">
+
+                <div class="gallery-item">
+                    <img src="Photos/pic1.jpg" alt="Portfolio Image 1">
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Photos/pic2.jpg" alt="Portfolio Image 2">
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Photos/pic3.jpg" alt="Portfolio Image 3">
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Photos/pic4.jpg" alt="Portfolio Image 4">
+                </div>
+        
+                <div class="gallery-item">
+                    <img src="Photos/pic5.jpg" alt="Portfolio Image 5">
+                </div>
+        
+                <div class="gallery-item">
+                    <img src="Photos/pic6.jpg" alt="Portfolio Image 6">
+                </div>
+        
+                <div class="gallery-item">
+                    <img src="Photos/pic7.jpg" alt="Portfolio Image 7">
+                </div>
+        
+                <div class="gallery-item">
+                    <img src="Photos/pic8.jpg" alt="Portfolio Image 8">
+                </div>
+        
+                <div class="gallery-item">
+                    <img src="Photos/pic9.jpg" alt="Portfolio Image 9">
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="Contact" class="contact-container">
+            <div class="contact-content">
+                <h2>Contact Me</h2>
+                <form action="https://formsubmit.co/kusumakumar2003@gmail.com" method="POST">
+                    <div class="form-group">
+                        <label for="full-name">Full Name:</label>
+                        <input type="text" id="full-name" name="full-name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="send-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
