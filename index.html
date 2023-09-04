@@ -60,56 +60,6 @@
             };
     
             animateParticles();
-    
-            // Create a portfolio gallery
-            const galleryContainer = document.querySelector('.gallery-container');
-            const imageUrls = [
-                'Photos/pic1.JPG',
-                'Photos/pic2.JPG',
-                'Photos/pic3.JPG',
-                'Photos/pic4.JPG',
-                'Photos/pic5.JPG',
-                'Photos/pic6.JPG',
-                'Photos/pic7.JPG',
-                'Photos/pic8.JPG',
-                'Photos/pic9.JPG'
-            ];
-    
-            const imageTextures = [];
-            const textureLoader = new THREE.TextureLoader();
-    
-            for (const imageUrl of imageUrls) {
-                textureLoader.load(imageUrl, (texture) => {
-                    imageTextures.push(texture);
-    
-                    const planeGeometry = new THREE.PlaneGeometry(2, 1.5);
-                    const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
-                    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    
-                    plane.position.set(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5);
-                    plane.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-    
-                    galleryContainer.add(plane);
-    
-                    if (imageTextures.length === imageUrls.length) {
-                        animateGallery();
-                    }
-                });
-            }
-    
-            // Animate the gallery
-            function animateGallery() {
-                requestAnimationFrame(animateGallery);
-    
-                for (const plane of galleryContainer.children) {
-                    plane.rotation.x += 0.005;
-                    plane.rotation.y += 0.005;
-                }
-    
-                renderer.render(scene, camera);
-            }
-    
-            animateGallery();
         </script>
     </head>    
     <body>
@@ -133,8 +83,6 @@
                     <img src="bg.jpg" alt="Background Image">
                 </div>
                 <div class="social-links">
-                    <a href="mailto:kusumak@middlebury.edu"><i
-                            class="fas fa-envelope fa-3x"></i></a>
                     <a href="https://github.com/Kusuma-Kumar" target="_blank"><i
                             class="fab fa-github fa-3x"></i></a>
                     <a href="https://www.linkedin.com/in/kusuma-kumar/"
@@ -201,44 +149,6 @@
 
         <div id="Portfolio" class="portfolio-container">
             <h2 class="section-heading">Portfolio</h2>
-            <div class="gallery-container">
-
-                <div class="gallery-item">
-                    <img src="Photos/pic1.jpg" alt="Portfolio Image 1">
-                </div>
-
-                <div class="gallery-item">
-                    <img src="Photos/pic2.jpg" alt="Portfolio Image 2">
-                </div>
-
-                <div class="gallery-item">
-                    <img src="Photos/pic3.jpg" alt="Portfolio Image 3">
-                </div>
-
-                <div class="gallery-item">
-                    <img src="Photos/pic4.jpg" alt="Portfolio Image 4">
-                </div>
-        
-                <div class="gallery-item">
-                    <img src="Photos/pic5.jpg" alt="Portfolio Image 5">
-                </div>
-        
-                <div class="gallery-item">
-                    <img src="Photos/pic6.jpg" alt="Portfolio Image 6">
-                </div>
-        
-                <div class="gallery-item">
-                    <img src="Photos/pic7.jpg" alt="Portfolio Image 7">
-                </div>
-        
-                <div class="gallery-item">
-                    <img src="Photos/pic8.jpg" alt="Portfolio Image 8">
-                </div>
-        
-                <div class="gallery-item">
-                    <img src="Photos/pic9.jpg" alt="Portfolio Image 9">
-                </div>
-            </div>
         </div>
         
 
