@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/quant-limits/index.html",
       "/posts/palmer-penguins/index.html"
     ]
   }

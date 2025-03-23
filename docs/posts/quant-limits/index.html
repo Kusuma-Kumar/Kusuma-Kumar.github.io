@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kusuma Kumar">
+<meta name="dcterms.date" content="2025-03-19">
+<meta name="description" content="Exploring the limitations of a purely quantitative approach to understanding algorithmic bias and discrimination.">
+
+<title>Limits of the Quantitative Approach – My Awesome CSCI 0451 Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6de787833effe4777a6777a5e05fb578.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: white;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: white;
+background-image: url(../../img/landscape.png);
+background-size: cover;
+      }
+</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">My Awesome CSCI 0451 Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Limits of the Quantitative Approach</h1>
+                  <div>
+        <div class="description">
+          Exploring the limitations of a purely quantitative approach to understanding algorithmic bias and discrimination.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kusuma Kumar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 19, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>Quantitative methods are widely used to assess bias and discrimination in machine learning models, yet their effectiveness remains a topic of debate. While these methods—such as statistical fairness criteria, audits, and hypothesis testing—provide objective ways to detect disparities, they also have limitations. <span class="citation" data-cites="narayanan2022limits">Narayanan (<a href="#ref-narayanan2022limits" role="doc-biblioref">2022</a>)</span> critiques these approaches, arguing that they often reinforce systemic bias rather than mitigate it. This essay engages with Narayanan’s claims by analyzing both the benefits and drawbacks of quantitative fairness assessments. Using examples from facial recognition technology and Facebook’s housing ad delivery algorithms, it explores the trade-offs between mathematical fairness notions and broader ethical concerns. Drawing from <span class="citation" data-cites="barocasFairnessMachineLearning2023">Barocas, Hardt, and Narayanan (<a href="#ref-barocasFairnessMachineLearning2023" role="doc-biblioref">2023</a>)</span> and <span class="citation" data-cites="D20201">D’Ignazio and Klein (<a href="#ref-D20201" role="doc-biblioref">2023</a>)</span>, this analysis highlights how fairness metrics alone cannot resolve deep-seated inequalities. Instead, a combined approach—integrating statistical methods with qualitative and policy-driven interventions—is essential for achieving meaningful algorithmic fairness.</p>
+</section>
+<section id="narayanans-position" class="level1">
+<h1>Narayanan’s ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍position</h1>
+<p>Narayanan identifies seven key limitations of these methods, which, despite good intentions, can justify racism and perpetuate inaction. He highlights the null hypothesis issue—the assumption that choices reflect the perspective of privileged individuals who do not experience daily discrimination. Narayanan argues that data are not neutral but inherently political. Collected with specific goals, data can obscure or emphasize aspects of reality. Thus, scientific and quantitative methods cannot resolve fundamental conflicts over values.</p>
+<p>He cautions against viewing quantitative methods as objective alternatives to democratic debates on societal values. Instead, he advocates for greater emphasis on descriptive work—collecting, curating, and carefully describing data without relying solely on complex statistical models. Narayanan calls for a more critical approach to data analysis, urging researchers to interrogate datasets, understand their context, and recognize embedded assumptions.</p>
+<p>While he does not reject quantitative methods, he advocates for fundamentally shifting their role in studying discrimination. He calls for actions that restore context and meaning to numerical analyses.</p>
+</section>
+<section id="benefits-of-quantitative-methods" class="level1">
+<h1>Benefits ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍of ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍quantitative ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍methods</h1>
+<p>The article “Evaluating Impact of Race in Facial Recognition across Machine Learning and Deep Learning Algorithms” demonstrates how quantitative methods provide crucial insights into racial bias in facial recognition technology. By leveraging objective metrics, these methods enable a systematic and data-driven approach to identifying disparities across different racial groups.</p>
+<p>Quantitative analysis offers concrete evidence of bias by measuring key performance indicators such as accuracy and error rates across diverse datasets (<span class="citation" data-cites="coe2021evaluating">Coe and Atay (<a href="#ref-coe2021evaluating" role="doc-biblioref">2021</a>)</span>). Through statistical evaluation, researchers can assess how algorithm performance varies based on racial composition, revealing disparities that may otherwise go unnoticed. For example, confusion matrices allow for a detailed breakdown of classification errors, exposing whether certain racial groups experience disproportionately high false positive or false negative rates. The study highlights that models trained on datasets skewed towards White individuals exhibit declining accuracies for Decision Trees and Logistic Regression (<span class="citation" data-cites="coe2021evaluating">Coe and Atay (<a href="#ref-coe2021evaluating" role="doc-biblioref">2021</a>)</span>). This decline, particularly for Black individuals, is directly associated with a lower rate of correct classifications (true positives) and a higher occurrence of misclassifications (false negatives).</p>
+<p>By systematically quantifying bias, these methods not only diagnose fairness concerns but also empower developers to refine algorithms, improve fairness, and ensure more equitable AI systems. Without such rigorous quantitative assessments, algorithmic biases may remain hidden, perpetuating systemic disadvantages in real-world applications.</p>
+</section>
+<section id="connections-to-chapter-3-4" class="level1">
+<h1>Connections to Chapter 3, 4</h1>
+<p>Confusion matrices provide a visual and quantitative tool to highlight errors in classification by revealing disparities in group-specific error rates, helping developers favor a less discriminatory algorithm.</p>
+<p>As we have seen, the poorer performance of facial recognition algorithms on underrepresented groups leads to systematic relative disadvantage. While statistical criteria alone cannot certify fairness, the technical understanding of these algorithms directly informs the moral language of fairness by revealing potential systematic disadvantages and violations of equality of opportunity arising from biases in the training data, even when sensitive attributes are not explicitly used in the algorithm.</p>
+</section>
+<section id="drawbacks-of-quantitative-methods" class="level1">
+<h1>Drawbacks ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍of ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍quantitative ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍methods</h1>
+<p>Quantitative methods are frequently used to assess discrimination in algorithmic systems, but they face significant limitations, particularly in contexts where powerful entities control access to data and where machine learning models optimize outcomes in ways that reinforce systemic bias. The National Fair Housing Alliance v. Facebook, Inc.&nbsp;case illustrates these challenges, showing that quantitative fairness assessments can be insufficient or misleading when applied to complex, opaque digital advertising platforms.</p>
+<p>Reliance on Corporate-Controlled Data One major limitation of quantitative methods in discrimination audits is their reliance on data provided by the very companies under scrutiny. As <span class="citation" data-cites="narayanan2022limits">Narayanan (<a href="#ref-narayanan2022limits" role="doc-biblioref">2022</a>)</span> argues, researchers and policymakers often lack independent access to platform data, making it difficult to verify whether algorithmic processes are truly unbiased. This is particularly evident in cases like National Fair Housing Alliance v. Facebook, Inc., where legal challenges relied on Facebook’s own datasets to evaluate discrimination in housing ad delivery. Because companies like Facebook have a vested interest in minimizing evidence of discrimination, they control what data is disclosed, how it is structured, and how it is analyzed, often in ways that obscure the full extent of bias.</p>
+<p>Even when researchers gain access to datasets, biases in data collection and reporting can undermine fairness assessments. <span class="citation" data-cites="10.1145/3419394.3423641">Venkatadri and Mislove (<a href="#ref-10.1145/3419394.3423641" role="doc-biblioref">2020</a>)</span> demonstrates that digital advertising platforms allow advertisers to combine seemingly neutral targeting attributes in ways that systematically disadvantage protected groups, even when explicit targeting by race, gender, or age is restricted. These subtle forms of bias are difficult to detect using conventional statistical tests, leading to an illusion of fairness when discrimination is still occurring.</p>
+<p>Algorithmic Optimization and Hidden Bias Beyond issues of data control, quantitative methods often fail to account for hidden biases introduced by algorithmic optimization. As <span class="citation" data-cites="humber2020fairhousing">Humber and Matthews (<a href="#ref-humber2020fairhousing" role="doc-biblioref">2020</a>)</span> explains, even when explicit targeting mechanisms are removed, Facebook’s ad delivery system independently learns to distribute ads in ways that reinforce historical inequalities. For example, research has shown that housing ads featuring imagery associated with white communities are disproportionately shown to white users, while ads with content stereotypically linked to Black communities are more frequently delivered to Black users. These disparities arise not from advertiser intent but from Facebook’s internal algorithmic processes, which optimize for engagement in ways that mirror and perpetuate existing social divisions.</p>
+<p>This presents a key limitation of fairness audits: most quantitative assessments focus on explicit discrimination in inputs (such as targeting criteria) rather than biased outcomes in ad delivery. As <span class="citation" data-cites="narayanan2022limits">Narayanan (<a href="#ref-narayanan2022limits" role="doc-biblioref">2022</a>)</span> warns, this narrow focus allows platforms to claim compliance with anti-discrimination laws while continuing to produce biased results through automated decision-making. The inability of quantitative models to detect these second-order effects underscores the need for alternative approaches that combine statistical techniques with qualitative investigations, policy interventions, and platform accountability measures.</p>
+<p>Structural Bias and the Limits of Statistical Fairness Another critical drawback is that quantitative fairness metrics often fail to capture structural inequalities embedded in machine learning models. For example, fairness metrics like demographic parity and equalized odds focus on statistical balance across groups but do not account for historical and systemic disadvantages. This is particularly problematic in areas like housing and employment, where past discrimination has created lasting disparities that bias training data and shape algorithmic outputs in ways that simple fairness metrics cannot correct.</p>
+<p>Furthermore, <span class="citation" data-cites="humber2020fairhousing">Humber and Matthews (<a href="#ref-humber2020fairhousing" role="doc-biblioref">2020</a>)</span> highlights that current legal frameworks struggle to hold platforms accountable because quantitative evidence alone is often insufficient to prove intent or causality. Even if researchers identify disparities in ad delivery, platforms like Facebook can argue that these results are incidental rather than intentional, making it difficult to enforce fair housing laws in digital spaces.</p>
+</section>
+<section id="connections-to-chapter-3-4-1" class="level1">
+<h1>Connections to Chapter 3, 4</h1>
+<p>Quantitative fairness notions, such as demographic parity and equalized odds, provide structured ways to measure and mitigate bias but also have limitations. As <span class="citation" data-cites="barocasFairnessMachineLearning2023">Barocas, Hardt, and Narayanan (<a href="#ref-barocasFairnessMachineLearning2023" role="doc-biblioref">2023</a>)</span> explains, fairness criteria inherently involve trade-offs, meaning no single metric fully captures ethical concerns.</p>
+<p>In facial recognition bias, statistical measures like false positive rates and false negative rates align with equalized odds, which requires similar error rates across groups (<span class="citation" data-cites="barocasFairnessMachineLearning2023">Barocas, Hardt, and Narayanan (<a href="#ref-barocasFairnessMachineLearning2023" role="doc-biblioref">2023</a>)</span>). Research by Coe and Atay (2021) demonstrates that models trained on imbalanced datasets disproportionately misclassify Black individuals, highlighting systematic disadvantage—a central issue in algorithmic fairness (<span class="citation" data-cites="barocasFairnessMachineLearning2023">Barocas, Hardt, and Narayanan (<a href="#ref-barocasFairnessMachineLearning2023" role="doc-biblioref">2023</a>)</span>). While statistical fairness measures diagnose disparities, they do not dictate whether these disparities are morally or legally acceptable.</p>
+<p>In the National Fair Housing Alliance v. Facebook, Inc.&nbsp;case, demographic parity was a key concern, as Facebook’s ad delivery system disproportionately limited housing opportunities for marginalized communities. While demographic parity suggests that outcomes should be independent of protected attributes. <span class="citation" data-cites="barocasFairnessMachineLearning2023">Barocas, Hardt, and Narayanan (<a href="#ref-barocasFairnessMachineLearning2023" role="doc-biblioref">2023</a>)</span> (Ch. 3) notes that enforcing strict parity can conflict with calibration, which ensures accurate predictions. Even when explicit targeting is restricted, ad delivery optimizations perpetuate historical inequalities (Humber and Matthews, 2020). This exemplifies how satisfying one fairness metric can still lead to inequitable outcomes—a core issue explored in Chapter 4.</p>
+</section>
+<section id="matrix-of-domination" class="level1">
+<h1>Matrix of Domination</h1>
+<p>Facebook’s advertising platform operates within multiple domains:</p>
+<ul>
+<li><p>Hegemonic domain: Facebook’s ad targeting options, even if seemingly neutral on their face after restrictions were put in place, could be used in ways that reinforced existing discriminatory ideas about who belongs in certain neighborhoods. Advertisers might have subtly employed combinations of targeting features or even the ad content itself to exclude certain demographic groups from seeing housing opportunities. This aligns with the hegemonic function of “circulating ideas about who is entitled to exercise power and who is not”(<span class="citation" data-cites="D20201">D’Ignazio and Klein (<a href="#ref-D20201" role="doc-biblioref">2023</a>)</span>).</p></li>
+<li><p>Interpersonal Domain: If individuals were systematically less likely to see housing ads due to Facebook’s algorithms, they would have missed out on crucial information about available homes. This directly affects their ability to find suitable and affordable housing, a fundamental aspect of their lives. Experiencing the exclusion from housing information, even if the exact cause was not immediately apparent, could contribute to feelings of being systematically disadvantaged. This can reinforce existing societal inequalities in housing access on a personal level, impacting individuals’ sense of belonging and opportunity by conveying that “systems of power are not on [their] side” (<span class="citation" data-cites="D20201">D’Ignazio and Klein (<a href="#ref-D20201" role="doc-biblioref">2023</a>)</span>).</p></li>
+</ul>
+</section>
+<section id="my-views" class="level1">
+<h1>My views</h1>
+<p>Narayanan’s speech holds significant truth and carries weight in the decisions we make in this industry. I agree with his concerns but reject the notion that quantitative methods do “more harm than good” (<span class="citation" data-cites="narayanan2022limits">Narayanan (<a href="#ref-narayanan2022limits" role="doc-biblioref">2022</a>)</span>). The harm lies not in the methods themselves but in how they are applied. When used critically and in conjunction with broader ethical considerations, they serve as powerful tools for identifying and mitigating algorithmic discrimination rather than merely justifying existing inequalities.</p>
+<p>I align with the middle view of fairness, which emphasizes the importance of addressing historical disadvantages faced by individuals. I believe that compensating for these inequities is crucial in the development of fairer systems, although it is important to recognize that algorithmic bias is inherently embedded in the data used to train these models, and thus, cannot be fully eradicated.</p>
+<p>Under the middle view, it is the responsibility of the algorithm designer to determine how best to account for diversity and individual variation in their models. This perspective acknowledges both the need for fairness in individual treatment and the challenges inherent in working with biased data. However, it is equally important for those who deploy and utilize these algorithms to adopt a broad view of fairness. The broad view shifts the focus from individual-level adjustments to systemic-level interventions, aiming to address and mitigate injustices that arise at the societal level. This dual approach—balancing the individual adjustments of the middle view with the systemic focus of the broad view—ensures a more comprehensive strategy for combating discrimination.</p>
+</section>
+<section id="discussion" class="level1">
+<h1>Discussion</h1>
+<p><span class="citation" data-cites="narayanan2022limits">Narayanan (<a href="#ref-narayanan2022limits" role="doc-biblioref">2022</a>)</span> raises fundamental concerns about the ability of quantitative fairness methods to address discrimination. While measures such as equalized odds and demographic parity provide structured ways to assess fairness, they fail to capture historical and structural inequalities embedded in data. As discussed in <span class="citation" data-cites="barocasFairnessMachineLearning2023">Barocas, Hardt, and Narayanan (<a href="#ref-barocasFairnessMachineLearning2023" role="doc-biblioref">2023</a>)</span>, fairness metrics inherently involve trade-offs, meaning no single metric can fully address ethical concerns.</p>
+<p>The case studies examined in this essay illustrate these challenges. In facial recognition systems, quantitative fairness audits have been useful in exposing racial disparities (<span class="citation" data-cites="coe2021evaluating">Coe and Atay (<a href="#ref-coe2021evaluating" role="doc-biblioref">2021</a>)</span>), yet they do not eliminate the root causes of bias in training data. Similarly, in the National Fair Housing Alliance v. Facebook, Inc.&nbsp;case, fairness audits identified disparities in ad delivery, but they could not fully explain or prevent algorithmic discrimination. Facebook’s ad targeting system perpetuated segregation even when explicit demographic data was removed, demonstrating that bias often emerges from optimization processes rather than direct human intent (<span class="citation" data-cites="humber2020fairhousing">Humber and Matthews (<a href="#ref-humber2020fairhousing" role="doc-biblioref">2020</a>)</span>).</p>
+<p>Despite these limitations, abandoning quantitative methods is not a viable solution. As seen in fairness audits of facial recognition models, these methods remain essential for diagnosing disparities and prompting regulatory scrutiny. However, as <span class="citation" data-cites="D20201">D’Ignazio and Klein (<a href="#ref-D20201" role="doc-biblioref">2023</a>)</span> argues, fairness cannot be achieved through mathematical models alone—it requires a broader, justice-oriented approach that incorporates qualitative insights, historical context, and systemic interventions.</p>
+<section id="references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-barocasFairnessMachineLearning2023" class="csl-entry" role="listitem">
+Barocas, Solon, Moritz Hardt, and Arvind Narayanan. 2023. <em>Fairness and Machine Learning: Limitations and Opportunities</em>. <span>Cambridge, Massachusetts</span>: <span>The MIT Press</span>.
+</div>
+<div id="ref-coe2021evaluating" class="csl-entry" role="listitem">
+Coe, J., and M. Atay. 2021. <span>“Evaluating Impact of Race in Facial Recognition Across Machine Learning and Deep Learning Algorithms.”</span> <em>Computers</em> 10 (9): 113. <a href="https://doi.org/10.3390/computers10090113">https://doi.org/10.3390/computers10090113</a>.
+</div>
+<div id="ref-D20201" class="csl-entry" role="listitem">
+D’Ignazio, Catherine, and Lauren Klein. 2023. <span>“1. <span>The</span> <span>Power</span> <span>Chapter</span>.”</span> In <em>Data <span>Feminism</span></em>.
+</div>
+<div id="ref-humber2020fairhousing" class="csl-entry" role="listitem">
+Humber, Nadiyah J., and James Matthews. 2020. <span>“Fair Housing Enforcement in the Age of Digital Advertising: A Closer Look at Facebook’s Marketing Algorithms.”</span> <em>Boston Bar Journal</em> 64: Winter 2020 Issue. <a href="https://ssrn.com/abstract=3544134">https://ssrn.com/abstract=3544134</a>.
+</div>
+<div id="ref-narayanan2022limits" class="csl-entry" role="listitem">
+Narayanan, Arvind. 2022. <span>“The Limits of the Quantitative Approach to Discrimination.”</span> Speech.
+</div>
+<div id="ref-10.1145/3419394.3423641" class="csl-entry" role="listitem">
+Venkatadri, Giridhari, and Alan Mislove. 2020. <span>“On the Potential for Discrimination via Composition.”</span> In <em>Proceedings of the ACM Internet Measurement Conference</em>, 333–44. IMC ’20. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3419394.3423641">https://doi.org/10.1145/3419394.3423641</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
