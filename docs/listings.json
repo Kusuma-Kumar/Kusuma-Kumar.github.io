@@ -2,9 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/automated-decision-systems/index.html",
+      "/posts/overfitting-DD/index.html",
       "/posts/quant-limits/index.html",
-      "/posts/logistic-regression/index.html",
-      "/posts/perceptron/index.html",
       "/posts/palmer-penguins/index.html"
     ]
   }

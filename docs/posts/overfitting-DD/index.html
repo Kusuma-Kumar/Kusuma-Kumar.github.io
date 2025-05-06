@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Kusuma Kumar">
+<meta name="dcterms.date" content="2025-04-20">
+<meta name="description" content="TODO">
 
-<title>CSCI 0451 Blog by Kusuma Kumar – My Awesome CSCI 0451 Blog</title>
+<title>Overfitting and Double Descent – My Awesome CSCI 0451 Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +26,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6de787833effe4777a6777a5e05fb578.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6de787833effe4777a6777a5e05fb578.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,35 +69,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>
 
       .quarto-title-block .quarto-title-banner h1,
@@ -111,52 +83,23 @@ ul.task-list li input[type="checkbox"] {
 
       .quarto-title-block .quarto-title-banner {
         color: white;
-background-image: url(img/landscape.png);
+background-image: url(../../img/landscape.png);
 background-size: cover;
       }
 </style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">My Awesome CSCI 0451 Blog</span>
     </a>
   </div>
@@ -167,7 +110,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -190,156 +133,85 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">CSCI 0451 Blog by Kusuma Kumar</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Overfitting and Double Descent</h1>
+                  <div>
+        <div class="description">
+          TODO
+        </div>
+      </div>
+                </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kusuma Kumar </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 20, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>TODO</p>
+<p>def sig(x): return 1/(1+torch.exp(-x))</p>
+<p>def square(x): return x**2</p>
+<p>class RandomFeatures: ““” Random sigmoidal feature map. This feature map must be “fit” before use, like this:</p>
+<pre><code>phi = RandomFeatures(n_features = 10)
+phi.fit(X_train)
+X_train_phi = phi.transform(X_train)
+X_test_phi = phi.transform(X_test)
+
+model.fit(X_train_phi, y_train)
+model.score(X_test_phi, y_test)
+
+It is important to fit the feature map once on the training set and zero times on the test set. 
+"""
+
+def __init__(self, n_features, activation = sig):
+    self.n_features = n_features
+    self.u = None
+    self.b = None
+    self.activation = activation
+
+def fit(self, X):
+    self.u = torch.randn((X.size()[1], self.n_features), dtype = torch.float64)
+    self.b = torch.rand((self.n_features), dtype = torch.float64) 
+
+def transform(self, X):
+    return self.activation(X @ self.u + self.b)</code></pre>
+<p>To ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍generate ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍features ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍from ‍a ‍‍‍‍‍‍‍‍‍‍‍‍‍data ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍matrix,‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍ ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍we ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍run ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍the ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍following:</p>
+<p>phi = RandomFeatures() phi.fit(X_train) X_train_features = phi.transform(X_train) X_test_features = phi.transform(X_test)</p>
+<p>#… remainder of machine learning pipeline</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1746417600000" data-listing-file-modified-sort="1746557957334" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1889">
-<div class="thumbnail">
-<p><a href="./posts/automated-decision-systems/index.html" class="no-external"></a></p><a href="./posts/automated-decision-systems/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/automated-decision-systems/desktopAI-2.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/automated-decision-systems/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/automated-decision-systems/index.html" class="no-external">Design and Impact of Automated Decision Systems</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/automated-decision-systems/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/automated-decision-systems/index.html" class="no-external">Analyze credit risk using loan data and logistic regression to predict defaults based on borrower demographics. It also applies profit-driven threshold optimization to enhance automated lending decisions.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/automated-decision-systems/index.html" class="no-external">
-<div class="listing-date">
-May 5, 2025
-</div>
-<div class="listing-author">
-Kusuma Kumar
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1745121600000" data-listing-file-modified-sort="1745201578039" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="224">
-<div class="thumbnail">
-<p><a href="./posts/overfitting-DD/index.html" class="no-external"></a></p><a href="./posts/overfitting-DD/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/overfitting-DD/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/overfitting-DD/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/overfitting-DD/index.html" class="no-external">Overfitting and Double Descent</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/overfitting-DD/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/overfitting-DD/index.html" class="no-external">TODO</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/overfitting-DD/index.html" class="no-external">
-<div class="listing-date">
-Apr 20, 2025
-</div>
-<div class="listing-author">
-Kusuma Kumar
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1742356800000" data-listing-file-modified-sort="1744932130983" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2112">
-<div class="thumbnail">
-<p><a href="./posts/quant-limits/index.html" class="no-external"></a></p><a href="./posts/quant-limits/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/quant-limits/image.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/quant-limits/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/quant-limits/index.html" class="no-external">Limits of the Quantitative Approach</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/quant-limits/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/quant-limits/index.html" class="no-external">Exploring the limitations of a purely quantitative approach to understanding algorithmic bias and discrimination.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/quant-limits/index.html" class="no-external">
-<div class="listing-date">
-Mar 19, 2025
-</div>
-<div class="listing-author">
-Kusuma Kumar
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1740114000000" data-listing-file-modified-sort="1740757352590" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1494">
-<div class="thumbnail">
-<p><a href="./posts/palmer-penguins/index.html" class="no-external"></a></p><a href="./posts/palmer-penguins/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/palmer-penguins/image.jpg" class="thumbnail-image"></p>
-</a><p><a href="./posts/palmer-penguins/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/palmer-penguins/index.html" class="no-external">Classifying Palmer Penguins</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/palmer-penguins/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/palmer-penguins/index.html" class="no-external">Classifying Palmer Penguins with a Random Forest Classifier and visualizing the decision regions generated by the model.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/palmer-penguins/index.html" class="no-external">
-<div class="listing-date">
-Feb 21, 2025
-</div>
-<div class="listing-author">
-Kusuma Kumar
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
