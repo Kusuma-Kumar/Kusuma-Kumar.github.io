@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/music-genres/index.html",
+      "/posts/auditing-bias/index.html",
       "/posts/automated-decision-systems/index.html",
       "/posts/overfitting-DD/index.html",
       "/posts/quant-limits/index.html",

@@ -216,12 +216,12 @@ background-size: cover;
 <h1>Abstract</h1>
 <p>This blog post explores the design, impact, and performance of automated decision-making systems in the context of credit risk evaluation. Using a real-world dataset of loan applicants, we perform exploratory data analysis to understand demographic patterns and loan behavior across age, income, and homeownership groups. We apply logistic regression to predict loan default risk and evaluate model performance using classification metrics and profit-based threshold optimization. Our findings highlight both the predictive strengths and limitations of simple models like logistic regression, particularly in handling class imbalance. We further examine the trade-offs between loan approval and profit maximization, offering insights into how automated decision systems can influence financial access and institutional outcomes.</p>
 <p>Access the training data</p>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PhilChodrow/ml-notes/main/data/credit-risk/train.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.read_csv(url)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df_train.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -422,7 +422,7 @@ background-size: cover;
 <section id="figure-1" class="level2">
 <h2 class="anchored" data-anchor-id="figure-1">Figure 1</h2>
 <p>The code below performs a data analysis and visualization task focused on loan intent distribution across various age groups and types of homeownership. We first filters the data by selecting only relevant columns (person_age, person_home_ownership, and loan_intent) from the df_train DataFrame, while excludeing any records where the person_home_ownership is labeled as “OTHER”. Next, we creates a new column, age_group, by dividing the person_age into predefined age bins (18-24, 25-34, etc.) using the pd.cut() function, which categorizes the individuals into different age ranges. The code then groups the data by age_group, person_home_ownership, and loan_intent, calculating the count of applicants for each combination. Finally, it creates a series of bar plots with the x-axis representing age groups, the y-axis representing the count of applicants, and the hue denoting the loan intent. The plots are further divided by the type of homeownership (e.g., “OWN” or “RENT”), allowing for a comparative visualization across different ownership types.</p>
-<div id="cell-5" class="cell">
+<div id="cell-5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -452,8 +452,8 @@ background-size: cover;
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_99591/4017299881.py:10: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
-  grouped = df_1.groupby(['age_group', 'person_home_ownership', 'loan_intent']).size().reset_index(name='count')</code></pre>
+<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_37447/1813685786.py:10: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  grouped = df_1.groupby(</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -468,7 +468,7 @@ background-size: cover;
 <section id="figure-2" class="level2">
 <h2 class="anchored" data-anchor-id="figure-2">Figure 2</h2>
 <p>The code begins by displaying the maximum and minimum values of the loan_int_rate column, which is used to understand the range of loan interest rates in the dataset. The loan_int_rate values are then categorized into predefined bins, ranging from 5% to 23.9%. Each bin represents a specific range of interest rates, such as 5-5.9%, 6-6.9%, etc. The pd.cut() function is used to create these bins and label them with meaningful ranges. Following this, the code computes aggregated statistics for each bin, specifically the mean and median values of two other variables: cb_person_cred_hist_length (credit history length) and loan_percent_income (income percentage). These statistics provide insights into how credit history and income change as the loan interest rate increases, which could reveal underlying patterns or correlations in the dataset.</p>
-<div id="cell-7" class="cell">
+<div id="cell-7" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Max Value:"</span>, df_train[<span class="st">'loan_int_rate'</span>].<span class="bu">max</span>())</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Min Value:"</span>, df_train[<span class="st">'loan_int_rate'</span>].<span class="bu">min</span>())</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -486,7 +486,11 @@ background-size: cover;
 <pre><code>Max Value: 23.22
 Min Value: 5.42</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_37447/4186742674.py:8: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  df_train.groupby('int_rate').agg(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -653,40 +657,40 @@ Min Value: 5.42</code></pre>
 <h2 class="anchored" data-anchor-id="figure-3">Figure 3</h2>
 <p>The code begins by creating a subset of the original dataset (df_3) that includes the variables ‘person_income’, ‘loan_amnt’, ‘person_emp_length’, and ‘cb_person_default_on_file’. The next step categorizes ‘person_income’ into predefined income groups, ranging from 0 to 150k, using the pd.cut() function. This allows the income distribution to be analyzed in segments. The code also calculates the loan amount thresholds (the 25th and 75th percentiles) to classify borrowers into ‘Low’, ‘Mid’, or ‘High’ credit access categories based on their loan amount using a custom function (categorize_credit_access). Finally, a sns.catplot is used to visualize the distribution of income levels and credit access, with data split by whether the borrower has a default on file (‘cb_person_default_on_file’).</p>
 <div id="cell-9" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_3 <span class="op">=</span> df_train[[<span class="st">'person_income'</span>, <span class="st">'loan_amnt'</span>, <span class="st">'person_emp_length'</span>, <span class="st">'cb_person_default_on_file'</span>]].copy()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">30000</span>, <span class="dv">60000</span>, <span class="dv">90000</span>, <span class="dv">120000</span>, <span class="dv">150000</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'0-30k'</span>, <span class="st">'30k-60k'</span>, <span class="st">'60k-90k'</span>, <span class="st">'90k-120k'</span>, <span class="st">'120k-150k'</span>, <span class="st">'150k+'</span>]</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df_3.loc[:, <span class="st">'income_level'</span>] <span class="op">=</span> pd.cut(df_3[<span class="st">'person_income'</span>], bins<span class="op">=</span>bins, labels<span class="op">=</span>labels, right<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>low_threshold <span class="op">=</span> df_3[<span class="st">'loan_amnt'</span>].quantile(<span class="fl">0.25</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>high_threshold <span class="op">=</span> df_3[<span class="st">'loan_amnt'</span>].quantile(<span class="fl">0.75</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorize_credit_access(amount):</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> amount <span class="op">&lt;=</span> low_threshold:</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Low'</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> amount <span class="op">&lt;=</span> high_threshold:</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Mid'</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'High'</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>df_3.loc[:, <span class="st">'credit_access'</span>] <span class="op">=</span> df_3[<span class="st">'loan_amnt'</span>].<span class="bu">apply</span>(categorize_credit_access)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>fig_3 <span class="op">=</span> sns.catplot(</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'income_level'</span>,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'credit_access'</span>,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    col<span class="op">=</span><span class="st">'cb_person_default_on_file'</span>,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_3,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">'count'</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>fig_3.set_titles(<span class="st">'Default on File: </span><span class="sc">{col_name}</span><span class="st">'</span>)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>fig_3.set_axis_labels(<span class="st">'Income Level'</span>, <span class="st">'Number of Borrowers'</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>fig_3.set_xticklabels(rotation<span class="op">=</span><span class="dv">45</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>fig_3._legend.set_title(<span class="st">'Credit Access'</span>)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_3 <span class="op">=</span> df_train[[<span class="st">'person_income'</span>, <span class="st">'loan_amnt'</span>, <span class="st">'person_emp_length'</span>, <span class="st">'cb_person_default_on_file'</span>]].copy()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">30000</span>, <span class="dv">60000</span>, <span class="dv">90000</span>, <span class="dv">120000</span>, <span class="dv">150000</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'0-30k'</span>, <span class="st">'30k-60k'</span>, <span class="st">'60k-90k'</span>, <span class="st">'90k-120k'</span>, <span class="st">'120k-150k'</span>, <span class="st">'150k+'</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df_3.loc[:, <span class="st">'income_level'</span>] <span class="op">=</span> pd.cut(df_3[<span class="st">'person_income'</span>], bins<span class="op">=</span>bins, labels<span class="op">=</span>labels, right<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>low_threshold <span class="op">=</span> df_3[<span class="st">'loan_amnt'</span>].quantile(<span class="fl">0.25</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>high_threshold <span class="op">=</span> df_3[<span class="st">'loan_amnt'</span>].quantile(<span class="fl">0.75</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorize_credit_access(amount):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> amount <span class="op">&lt;=</span> low_threshold:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Low'</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> amount <span class="op">&lt;=</span> high_threshold:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Mid'</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'High'</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>df_3.loc[:, <span class="st">'credit_access'</span>] <span class="op">=</span> df_3[<span class="st">'loan_amnt'</span>].<span class="bu">apply</span>(categorize_credit_access)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>fig_3 <span class="op">=</span> sns.catplot(</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'income_level'</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'credit_access'</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    col<span class="op">=</span><span class="st">'cb_person_default_on_file'</span>,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_3,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">'count'</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>fig_3.set_titles(<span class="st">'Default on File: </span><span class="sc">{col_name}</span><span class="st">'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>fig_3.set_axis_labels(<span class="st">'Income Level'</span>, <span class="st">'Number of Borrowers'</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>fig_3.set_xticklabels(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>fig_3._legend.set_title(<span class="st">'Credit Access'</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -701,37 +705,37 @@ Min Value: 5.42</code></pre>
 <section id="part-c-logistic-regression" class="level1">
 <h1>Part C: Logistic Regression</h1>
 <p>This code implements a binary classification model to predict loan default status (loan_status) using logistic regression. First, a subset of relevant features is selected from the dataset, including demographic and financial attributes such as age, income, loan amount, interest rate, percent income, and credit history length. Any rows with missing values are removed to ensure clean input data. The dataset is then split into features (X) and target labels (y), and further divided into training and test sets using an 80/20 split. Because logistic regression is sensitive to feature scaling, the input features are standardized using StandardScaler. A LogisticRegression model is trained on the scaled training data, and predictions are made on the scaled test set. Finally, the confusion matrix, accuracy, and F1-score are calculated to evaluate the model.</p>
-<div id="cell-11" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, accuracy_score, f1_score</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df_model <span class="op">=</span> df_train[[<span class="st">'person_age'</span>, <span class="st">'person_income'</span>, <span class="st">'loan_amnt'</span>, <span class="st">'loan_int_rate'</span>, <span class="st">'loan_percent_income'</span>, <span class="st">'cb_person_cred_hist_length'</span>, <span class="st">'loan_status'</span>]]</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>df_model <span class="op">=</span> df_model.dropna()</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_model.drop(columns<span class="op">=</span>[<span class="st">'loan_status'</span>])</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_model[<span class="st">'loan_status'</span>]</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(X_train)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>X_test_scaled <span class="op">=</span> scaler.transform(X_test)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression()</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>model.fit(X_train_scaled, y_train)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test_scaled)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> f1_score(y_test, y_pred)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion Matrix:"</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(conf_matrix)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1-Score: </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-11" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, accuracy_score, f1_score</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>df_model <span class="op">=</span> df_train[[<span class="st">'person_age'</span>, <span class="st">'person_income'</span>, <span class="st">'loan_amnt'</span>, <span class="st">'loan_int_rate'</span>, <span class="st">'loan_percent_income'</span>, <span class="st">'cb_person_cred_hist_length'</span>, <span class="st">'loan_status'</span>]]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df_model <span class="op">=</span> df_model.dropna()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_model.drop(columns<span class="op">=</span>[<span class="st">'loan_status'</span>])</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_model[<span class="st">'loan_status'</span>]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(X_train)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>X_test_scaled <span class="op">=</span> scaler.transform(X_test)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression()</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>model.fit(X_train_scaled, y_train)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test_scaled)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> f1_score(y_test, y_pred)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion Matrix:"</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(conf_matrix)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1-Score: </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix:
 [[3521  212]
@@ -744,44 +748,54 @@ F1-Score: 0.4937</code></pre>
 </section>
 <section id="part-d-threshold" class="level1">
 <h1>Part D: Threshold</h1>
-<p>This following code block evaluates different classification thresholds to find the one that maximizes expected profit per prospective borrower, based on the logistic regression model’s probability outputs. Two functions define potential profits: profit_if_repaid calculates the return from a borrower who repays the loan over 10 periods, while profit_if_default estimates the loss-adjusted return when a borrower defaults after 3 periods, accounting for a 70% loss on the loan principal. The model’s predicted probabilities (y_proba) of loan default are obtained, and a range of 100 threshold values between 0 and 1 is tested. For each threshold, a prediction is made: if the probability exceeds the threshold, the borrower is rejected (coded as 1), and otherwise approved (coded as 0). The profit is then computed only for those approved (predicted 0), based on their actual loan status: if the borrower truly repaid (label 0), the profit_if_repaid function is used; if they defaulted (label 1), profit_if_default is applied. The average profit per borrower at each threshold is stored and plotted, allowing identification of the most profitable decision boundary. The optimal threshold is selected as the one that yields the highest average profit.</p>
+<p>This following code block evaluates different classification thresholds to find the one that maximizes expected profit per prospective borrower, based on the logistic regression model’s probability outputs. Two functions define potential profits: profit_if_repaid calculates the return from a borrower who repays the loan over 10 periods, while profit_if_default estimates the loss-adjusted return when a borrower defaults after 3 periods, accounting for a 70% loss on the loan principal. The model’s predicted probabilities (y_proba) of loan default are obtained, and a range of 100 threshold values between 0 and 1 is tested. For each threshold, a prediction is made: if the probability exceeds the threshold, the borrower is rejected (coded as 1), and otherwise, the borrower is approved (coded as 0). The profit is then computed only for those approved (predicted 0), based on their actual loan status: if the borrower truly repaid (label 1), the profit_if_repaid function is used; if they defaulted (label 0), profit_if_default is applied. The average profit per borrower at each threshold is stored and plotted, allowing us to identif the most profitable decision boundary.</p>
 <div id="cell-13" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> profit_if_repaid(loan_amnt, loan_int_rate):</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loan_amnt<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>loan_int_rate)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> loan_amnt</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> profit_if_default(loan_amnt, loan_int_rate):</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loan_amnt<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>loan_int_rate)<span class="op">**</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">1.7</span><span class="op">*</span>loan_amnt</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>y_proba <span class="op">=</span> model.predict_proba(X_test_scaled)[:, <span class="dv">1</span>]</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>thresholds <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>profits <span class="op">=</span> []</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> thresholds:</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    y_pred_thresh <span class="op">=</span> (y_proba <span class="op">&gt;</span> t).astype(<span class="bu">int</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    profit <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(y_pred_thresh)):</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> y_pred_thresh[i] <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span> </span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        loan <span class="op">=</span> X_test.iloc[i]</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> y_test.iloc[i] <span class="op">==</span> <span class="dv">0</span>: </span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>            profit <span class="op">+=</span> profit_if_repaid(loan[<span class="st">'loan_amnt'</span>], loan[<span class="st">'loan_int_rate'</span>])</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>            profit <span class="op">+=</span> profit_if_default(loan[<span class="st">'loan_amnt'</span>], loan[<span class="st">'loan_int_rate'</span>])</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    profits.append(profit <span class="op">/</span> <span class="bu">len</span>(y_test))</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>plt.plot(thresholds, profits)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Profit per Prospective Borrower(Training Set)"</span>)</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>best_threshold <span class="op">=</span> thresholds[np.argmax(profits)]</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best threshold for max profit: </span><span class="sc">{</span>best_threshold<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="op">=</span> (y_proba <span class="op">&gt;</span> best_threshold).astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> profit_if_repaid(loan_amnt, loan_int_rate):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    loan_int_rate <span class="op">=</span> loan_int_rate <span class="op">/</span> <span class="dv">100</span>  <span class="co"># Convert to decimal based on feedback</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loan_amnt<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>loan_int_rate)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> loan_amnt</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> profit_if_default(loan_amnt, loan_int_rate):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    loan_int_rate <span class="op">=</span> loan_int_rate <span class="op">/</span> <span class="dv">100</span>  <span class="co"># Convert to decimal based on feedback</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loan_amnt<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>loan_int_rate)<span class="op">**</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">1.7</span><span class="op">*</span>loan_amnt</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>y_proba <span class="op">=</span> model.predict_proba(X_test_scaled)[:, <span class="dv">1</span>]</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Changes based on feedback:</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>loan_amnt_arr <span class="op">=</span> X_test[<span class="st">'loan_amnt'</span>].values</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>loan_rate_arr <span class="op">=</span> X_test[<span class="st">'loan_int_rate'</span>].values</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>actual_status <span class="op">=</span> y_test.values</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>repaid_profits <span class="op">=</span> profit_if_repaid(loan_amnt_arr, loan_rate_arr)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>defaulted_profits <span class="op">=</span> profit_if_default(loan_amnt_arr, loan_rate_arr)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>thresholds <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>profits <span class="op">=</span> []</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> thresholds:</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># vectorized methods rather than relying on a for-loop across data rows. </span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> (y_proba <span class="op">&gt;</span> t).astype(<span class="bu">int</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    repaid_condition <span class="op">=</span> (actual_status <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (predictions <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    defaulted_condition <span class="op">=</span> (actual_status <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (predictions <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    total_profit <span class="op">=</span> (</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>(repaid_profits[repaid_condition]) <span class="op">+</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>(defaulted_profits[defaulted_condition])</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    avg_profit <span class="op">=</span> total_profit <span class="op">/</span> <span class="bu">len</span>(y_test)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    profits.append(avg_profit)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>plt.plot(thresholds, profits)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Profit per Prospective Borrower(Training Set)"</span>)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>best_threshold <span class="op">=</span> thresholds[np.argmax(profits)]</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best threshold for max profit: </span><span class="sc">{</span>best_threshold<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="op">=</span> (y_proba <span class="op">&gt;</span> best_threshold).astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -790,10 +804,10 @@ F1-Score: 0.4937</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Best threshold for max profit: 1.00</code></pre>
+<pre><code>Best threshold for max profit: 0.67</code></pre>
 </div>
 </div>
-<p>The analysis reveals that the most profitable threshold for approving loans is 1.00, meaning the model should only approve applicants with an extremely low predicted probability of default—essentially, only those it is almost certain will not default. This highly conservative approach maximizes profit, likely because the cost of defaults outweighs the benefits from borderline approvals. The profit curve visually illustrates how expected profit changes across thresholds, reinforcing the trade-off between loan approval rates and risk exposure. This threshold optimization approach emphasizes the importance of aligning classification strategy with business objectives, such as profit maximization, rather than solely focusing on accuracy or F1-score.</p>
+<p>The analysis reveals that the most profitable threshold for approving loans is 0.67, meaning the model should approve applicants with a predicted probability of default lower than 0.67. This threshold represents a balanced approach to maximizing profit while still allowing for a reasonable number of approvals. By setting the threshold at 0.67, the model optimizes the trade-off between approving enough applicants to generate profit while minimizing the risk of defaults, thereby ensuring that the potential gains from repaid loans outweigh those losses from defaults. The profit curve conveys how expected profit changes across thresholds, showing that the the profit per prospective borrower increase sharply upto threshold value of 0.67 but then starts to plateau. This reinforcing the trade-off between loan approval rates and risk exposure and shows that the risk becomes more apparent at higher threshold values.</p>
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
