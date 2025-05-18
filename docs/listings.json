@@ -3,9 +3,9 @@
     "listing": "/index.html",
     "items": [
       "/posts/music-genres/index.html",
+      "/posts/overfitting-DD/index.html",
       "/posts/auditing-bias/index.html",
       "/posts/automated-decision-systems/index.html",
-      "/posts/overfitting-DD/index.html",
       "/posts/perceptron/index.html",
       "/posts/quant-limits/index.html",
       "/posts/palmer-penguins/index.html"
