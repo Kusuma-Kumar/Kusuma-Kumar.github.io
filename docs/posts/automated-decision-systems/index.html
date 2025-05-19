@@ -216,12 +216,12 @@ background-size: cover;
 <h1>Abstract</h1>
 <p>This blog post explores the design, impact, and performance of automated decision-making systems in the context of credit risk evaluation. Using a real-world dataset of loan applicants, we perform exploratory data analysis to understand demographic patterns and loan behavior across age, income, and homeownership groups. We apply logistic regression to predict loan default risk and evaluate model performance using classification metrics and profit-based threshold optimization. Our findings highlight both the predictive strengths and limitations of simple models like logistic regression, particularly in handling class imbalance. We further examine the trade-offs between loan approval and profit maximization, offering insights into how automated decision systems can influence financial access and institutional outcomes.</p>
 <p>Access the training data</p>
-<div id="cell-3" class="cell" data-execution_count="7">
+<div id="cell-3" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PhilChodrow/ml-notes/main/data/credit-risk/train.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.read_csv(url)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df_train.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <div>
 
 
@@ -422,7 +422,7 @@ background-size: cover;
 <section id="figure-1" class="level2">
 <h2 class="anchored" data-anchor-id="figure-1">Figure 1</h2>
 <p>The code below performs a data analysis and visualization task focused on loan intent distribution across various age groups and types of homeownership. We first filters the data by selecting only relevant columns (person_age, person_home_ownership, and loan_intent) from the df_train DataFrame, while excludeing any records where the person_home_ownership is labeled as “OTHER”. Next, we creates a new column, age_group, by dividing the person_age into predefined age bins (18-24, 25-34, etc.) using the pd.cut() function, which categorizes the individuals into different age ranges. The code then groups the data by age_group, person_home_ownership, and loan_intent, calculating the count of applicants for each combination. Finally, it creates a series of bar plots with the x-axis representing age groups, the y-axis representing the count of applicants, and the hue denoting the loan intent. The plots are further divided by the type of homeownership (e.g., “OWN” or “RENT”), allowing for a comparative visualization across different ownership types.</p>
-<div id="cell-5" class="cell" data-execution_count="8">
+<div id="cell-5" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -452,7 +452,7 @@ background-size: cover;
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_5824/1813685786.py:10: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_82493/1813685786.py:10: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
   grouped = df_1.groupby(</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -468,7 +468,7 @@ background-size: cover;
 <section id="figure-2" class="level2">
 <h2 class="anchored" data-anchor-id="figure-2">Figure 2</h2>
 <p>The code begins by displaying the maximum and minimum values of the loan_int_rate column, which is used to understand the range of loan interest rates in the dataset. The loan_int_rate values are then categorized into predefined bins, ranging from 5% to 23.9%. Each bin represents a specific range of interest rates, such as 5-5.9%, 6-6.9%, etc. The pd.cut() function is used to create these bins and label them with meaningful ranges. Following this, the code computes aggregated statistics for each bin, specifically the mean and median values of two other variables: cb_person_cred_hist_length (credit history length) and loan_percent_income (income percentage). These statistics provide insights into how credit history and income change as the loan interest rate increases, which could reveal underlying patterns or correlations in the dataset.</p>
-<div id="cell-7" class="cell" data-execution_count="9">
+<div id="cell-7" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Max Value:"</span>, df_train[<span class="st">'loan_int_rate'</span>].<span class="bu">max</span>())</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Min Value:"</span>, df_train[<span class="st">'loan_int_rate'</span>].<span class="bu">min</span>())</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -487,10 +487,10 @@ background-size: cover;
 Min Value: 5.42</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_5824/4186742674.py:8: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+<pre><code>/var/folders/97/pjhs17cj6y5b0m1x31sjmszh0000gn/T/ipykernel_82493/4186742674.py:8: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
   df_train.groupby('int_rate').agg(</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="33">
 <div>
 
 
@@ -656,7 +656,7 @@ Min Value: 5.42</code></pre>
 <section id="figure-3" class="level2">
 <h2 class="anchored" data-anchor-id="figure-3">Figure 3</h2>
 <p>The code begins by creating a subset of the original dataset (df_3) that includes the variables ‘person_income’, ‘loan_amnt’, ‘person_emp_length’, and ‘cb_person_default_on_file’. The next step categorizes ‘person_income’ into predefined income groups, ranging from 0 to 150k, using the pd.cut() function. This allows the income distribution to be analyzed in segments. The code also calculates the loan amount thresholds (the 25th and 75th percentiles) to classify borrowers into ‘Low’, ‘Mid’, or ‘High’ credit access categories based on their loan amount using a custom function (categorize_credit_access). Finally, a sns.catplot is used to visualize the distribution of income levels and credit access, with data split by whether the borrower has a default on file (‘cb_person_default_on_file’).</p>
-<div id="cell-9" class="cell" data-execution_count="10">
+<div id="cell-9" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_3 <span class="op">=</span> df_train[[<span class="st">'person_income'</span>, <span class="st">'loan_amnt'</span>, <span class="st">'person_emp_length'</span>, <span class="st">'cb_person_default_on_file'</span>]].copy()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">30000</span>, <span class="dv">60000</span>, <span class="dv">90000</span>, <span class="dv">120000</span>, <span class="dv">150000</span>, <span class="bu">float</span>(<span class="st">'inf'</span>)]</span>
@@ -705,7 +705,7 @@ Min Value: 5.42</code></pre>
 <section id="part-c-logistic-regression" class="level1">
 <h1>Part C: Logistic Regression</h1>
 <p>This code implements a binary classification model to predict loan default status (loan_status) using logistic regression. First, a subset of relevant features is selected from the dataset, including demographic and financial attributes such as age, income, loan amount, interest rate, percent income, and credit history length. Any rows with missing values are removed to ensure clean input data. The dataset is then split into features (X) and target labels (y), and further divided into training and test sets using an 80/20 split. Because logistic regression is sensitive to feature scaling, the input features are standardized using StandardScaler. A LogisticRegression model is trained on the scaled training data, and predictions are made on the scaled test set. Finally, the confusion matrix, accuracy, and F1-score are calculated to evaluate the model.</p>
-<div id="cell-11" class="cell" data-execution_count="11">
+<div id="cell-11" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -749,7 +749,7 @@ F1-Score: 0.4937</code></pre>
 <section id="part-d-threshold" class="level1">
 <h1>Part D: Threshold</h1>
 <p>This following code block evaluates different classification thresholds to find the one that maximizes expected profit per prospective borrower, based on the logistic regression model’s probability outputs. Two functions define potential profits: profit_if_repaid calculates the return from a borrower who repays the loan over 10 periods, while profit_if_default estimates the loss-adjusted return when a borrower defaults after 3 periods, accounting for a 70% loss on the loan principal. The model’s predicted probabilities (y_proba) of loan default are obtained, and a range of 100 threshold values between 0 and 1 is tested. For each threshold, a prediction is made: if the probability exceeds the threshold, the borrower is rejected since there is a high likelihood that they will default(coded as 1), and otherwise, the borrower is approved as they are very likely to repay the loan(coded as 0). The profit is then computed only for those approved (predicted 0), based on their actual loan status: if the borrower truly repaid (label 0), the profit_if_repaid function is used; if they defaulted (label 0), profit_if_default is applied. The average profit per borrower at each threshold is stored and plotted, allowing us to identif the most profitable decision boundary.</p>
-<div id="cell-13" class="cell" data-execution_count="12">
+<div id="cell-13" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> profit_if_repaid(loan_amnt, loan_int_rate):</span>
@@ -776,26 +776,28 @@ F1-Score: 0.4937</code></pre>
 <span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> thresholds:</span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># vectorized methods rather than relying on a for-loop across data rows. </span></span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> (y_proba <span class="op">&gt;</span> t).astype(<span class="bu">int</span>)</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    repaid_condition <span class="op">=</span> (actual_status <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (predictions <span class="op">==</span> <span class="dv">0</span>)</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    defaulted_condition <span class="op">=</span> (actual_status <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (predictions <span class="op">==</span> <span class="dv">1</span>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    total_profit <span class="op">=</span> (</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>(repaid_profits[repaid_condition]) <span class="op">+</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>(defaulted_profits[defaulted_condition])</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    avg_profit <span class="op">=</span> total_profit <span class="op">/</span> <span class="bu">len</span>(y_test)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    profits.append(avg_profit)</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>plt.plot(thresholds, profits)</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Profit per Prospective Borrower(Training Set)"</span>)</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>best_threshold <span class="op">=</span> thresholds[np.argmax(profits)]</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best threshold for max profit: </span><span class="sc">{</span>best_threshold<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="op">=</span> (y_proba <span class="op">&gt;</span> best_threshold).astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># only want to give loans to this you predict would repay </span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    repaid_condition <span class="op">=</span> (actual_status <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (predictions <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    defaulted_condition <span class="op">=</span> (actual_status <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (predictions <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    total_profit <span class="op">=</span> (</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>(repaid_profits[repaid_condition]) <span class="op">+</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>(defaulted_profits[defaulted_condition])</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    avg_profit <span class="op">=</span> total_profit <span class="op">/</span> <span class="bu">len</span>(y_test)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    profits.append(avg_profit)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plt.plot(thresholds, profits)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Profit per Prospective Borrower(Training Set)"</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>best_threshold <span class="op">=</span> thresholds[np.argmax(profits)]</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best threshold for max profit: </span><span class="sc">{</span>best_threshold<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="op">=</span> (y_proba <span class="op">&gt;</span> best_threshold).astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -804,18 +806,22 @@ F1-Score: 0.4937</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Best threshold for max profit: 1.00</code></pre>
+<pre><code>Best threshold for max profit: 0.43</code></pre>
 </div>
 </div>
-<p>The analysis reveals that the most profitable threshold for approving loans is 1.00, meaning the model should approve applicants with a predicted probability of default lower than 1.00. This threshold represents an extremely conservative approach, maximizing profit by approving only those with the lowest likelihood of default. However, this comes at the cost of a very narrow approval rate. By setting the threshold at 1.00, the model optimizes the trade-off by approving only the most reliable applicants, thus minimizing the risk of defaults and ensuring that the potential gains from repaid loans significantly outweigh the losses from defaults. The profit curve illustrates how expected profit changes across thresholds, showing that the profit per prospective borrower increases sharply up to a threshold value of 1.00 but then remains relatively constant. This reinforces the trade-off between loan approval rates and risk exposure and emphasizes that, at this high threshold, the approval rate becomes severely limited, and the risk of excluding potential borrowers increases significantly.</p>
+</section>
+<section id="profit-based-threshold-optimization" class="level1">
+<h1>Profit-Based Threshold Optimization</h1>
+<p>The analysis reveals that the most profitable threshold for approving loans is 0.43, meaning the model should approve applicants with a predicted probability of default below 43%. This threshold represents a relatively conservative strategy, prioritizing applicants with low estimated risk while still approving a meaningful subset of the population. At this threshold, the model effectively balances profit maximization and loan accessibility. It avoids lending to high-risk individuals who are likely to default, thereby reducing potential financial losses. At the same time, it still approves a larger pool of borrowers compared to more extreme thresholds (e.g., 0.9+), where approval rates would drop sharply.</p>
+<p>The profit curve shows that expected profit per prospective borrower increases up to this point (0.43) and then begins to plateau and decline. This suggests that thresholds lower than 0.43 include too many risky applicants, leading to higher default losses, while thresholds higher than 0.43 could become overly restrictive, excluding borrowers who would have likely repaid and contributed positively to profit.</p>
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
 <p>The analysis presented in this blog uncovers several key insights about the relationship between borrower demographics and credit access, as well as the performance and implications of predictive modeling in financial decision-making.</p>
-<p>Our initial visualizations show clear disparities in loan intent across age and homeownership status. Younger individuals, especially renters, tend to apply for education-related loans, while older age groups and homeowners exhibit broader loan purposes. Interest rate analysis (Figure 2) reveals a positive correlation between loan interest and borrower risk, as measured by loan percent income and credit history. High-interest borrowers tend to allocate a greater portion of their income to loan repayment and may have longer (or more extreme) credit histories. Additionally, Figure 3 shows that high-income individuals, regardless of prior default status, have better access to large loans—suggesting that income remains a dominant factor in credit access even when defaults are present.</p>
-<p>The logistic regression model achieves high overall accuracy (82.99%) but struggles to correctly classify default cases, as indicated by an F1-score of 0.4937. This underperformance on the minority class is a common issue in credit risk modeling and raises concerns about the fairness and robustness of simple binary classifiers. The model’s bias toward predicting non-defaults can lead to missed opportunities for targeted interventions or overestimation of repayment reliability.</p>
-<p>By applying a profit-based threshold selection (Part D), we found that the most financially optimal strategy is to approve only those applicants with an extremely low predicted probability of default (threshold = 1.00). While this maximizes average profit per borrower, it comes at the cost of possibly denying nearly all applicants. This result highlight a critical trade-off between maximizing institutional profit and borrower access. It also highlights the ethical complexity of using automated systems in high-stakes domains such as lending, where capitalistic thresholds may further social and economic exclusion as we have seen in other instances throughout class.</p>
-<p>This analysis demonstrates the power and pitfalls of automated credit decision systems. While models like logistic regression can support scalable and data-driven decisions, their performance and the interpretation of results must be carefully managed. Especially important is the role of domain-specific metrics (e.g., profit, fairness) in shaping model thresholds and deployment strategies. As such systems increasingly mediate access to essential financial resources, their design should be critically examined for both technical performance and broader societal impact.</p>
+<p>Our initial visualizations show clear disparities in loan intent across age and homeownership status. Younger individuals, especially renters, tend to apply for education-related loans, while older age groups and homeowners exhibit broader loan purposes. Interest rate analysis reveals a positive correlation between loan interest and borrower risk, as measured by loan percent income and credit history. High-interest borrowers tend to allocate a greater portion of their income to loan repayment and may have longer (or more extreme) credit histories. Additionally, our findings show that high-income individuals, regardless of prior default status, have better access to large loans—suggesting that income remains a dominant factor in credit access even when defaults are present.</p>
+<p>The logistic regression model achieves a high overall accuracy (82.99%) but struggles to correctly classify default cases, as indicated by an F1-score of 0.4937. This underperformance on the minority class is a common issue in credit risk modeling and raises concerns about the fairness and robustness of simple binary classifiers. The model’s bias toward predicting non-defaults can lead to missed opportunities for targeted interventions or overestimation of repayment reliability.</p>
+<p>By applying a profit-based threshold selection (Part D), we found that the most financially optimal strategy is to approve only those applicants with a predicted probability of default below 43%. While this maximizes average profit per borrower, it comes at the cost of excluding moderate-risk applicants who may still be able to repay their loans, leading to an overly conservative approach. This result highlights a critical trade-off between maximizing institutional profit and borrower access. It also underscores the ethical complexity of using automated systems in high-stakes domains such as lending, where capitalistic thresholds may perpetuate social and economic exclusion, as we have discussed in class.</p>
+<p>Ultimately, this reinforces the inherent trade-off between maximizing institutional profit and expanding credit access. While a profit-based threshold like 0.43 supports financial sustainability, it may still restrict access for individuals who fall into the moderate-risk category. These are individuals who could benefit from credit but are excluded due to the stringent model predictions. As with any automated lending system, these decisions have real-world implications and must be evaluated not only for financial return, but also for fairness and societal impact.</p>
 
 
 </section>
